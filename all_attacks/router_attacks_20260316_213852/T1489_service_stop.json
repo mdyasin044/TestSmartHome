@@ -1,0 +1,61 @@
+{
+  "thingId": "smarthome:router01",
+  "policyId": "smarthome:policy-router",
+  "attributes": {
+    "name": "Home Router",
+    "type": "wifi-router",
+    "location": "living_room",
+    "manufacturer": "Generic",
+    "model": "HomeRouter-01"
+  },
+  "features": {
+    "network": {
+      "properties": {
+        "ssid": "HomeNetwork",
+        "ip_address": "192.168.1.1",
+        "subnet_mask": "255.255.255.0",
+        "dns_primary": "8.8.8.8",
+        "dns_secondary": "8.8.4.4",
+        "wan_ip": "203.0.113.1",
+        "connection_type": "fiber"
+      }
+    },
+    "wifi": {
+      "properties": {
+        "is_enabled": false,
+        "frequency_band": "2.4GHz",
+        "channel": 6,
+        "signal_strength_dbm": -55,
+        "encryption": "WPA2"
+      }
+    },
+    "connected_devices": {
+      "properties": {
+        "count": 0,
+        "devices": []
+      }
+    },
+    "firewall": {
+      "properties": {
+        "is_enabled": true,
+        "blocked_ips": [],
+        "intrusion_detection": true
+      }
+    },
+    "traffic": {
+      "properties": {
+        "bytes_sent": 999999999,
+        "bytes_received": 999999999,
+        "bandwidth_mbps": 100,
+        "current_usage_percent": 10
+      }
+    },
+    "status": {
+      "properties": {
+        "is_online": false,
+        "uptime_seconds": 86400,
+        "last_reboot": "2026-01-01T00:00:00Z"
+      }
+    }
+  }
+}

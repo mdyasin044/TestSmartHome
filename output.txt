@@ -1,0 +1,995 @@
+==================================================
+  SMART HOME ATTACK SIMULATION — MAIN
+==================================================
+
+[LOGS] Collecting Docker logs — 01_before_setup
+  Saved: docker_logs_20260316_213757\01_before_setup_docker-nginx-1.txt (541427 bytes)
+  Saved: docker_logs_20260316_213757\01_before_setup_docker-things-1.txt (1875958 bytes)
+  Saved: docker_logs_20260316_213757\01_before_setup_docker-gateway-1.txt (4280492 bytes)
+  Saved: docker_logs_20260316_213757\01_before_setup_docker-things-search-1.txt (243498 bytes)
+  Saved: docker_logs_20260316_213757\01_before_setup_docker-connectivity-1.txt (308959 bytes)
+  Saved: docker_logs_20260316_213757\01_before_setup_docker-swagger-ui-1.txt (15332 bytes)
+  Saved: docker_logs_20260316_213757\01_before_setup_docker-ditto-ui-1.txt (21953 bytes)
+  Saved: docker_logs_20260316_213757\01_before_setup_docker-mongodb-1.txt (751475 bytes)
+  Saved: docker_logs_20260316_213757\01_before_setup_docker-policies-1.txt (275429 bytes)
+  Saved: docker_logs_20260316_213757\01_before_setup_ALL.txt ✓
+
+[STEP 1] Creating all devices...
+
+>>> Running create_devices.py...
+----------------------------------------
+========================================
+CREATING ALL SMART HOME DEVICES
+========================================
+
+--- Policies ---
+  Policy [smarthome:policy-bulb]: 201 ✓
+  Policy [smarthome:policy-ac]: 201 ✓
+  Policy [smarthome:policy-alexa]: 201 ✓
+  Policy [smarthome:policy-router]: 201 ✓
+
+--- Devices ---
+  Bulb [smarthome:bulb01]: 201 ✓
+  AC [smarthome:ac01]: 201 ✓
+  Alexa [smarthome:alexa01]: 201 ✓
+  Router [smarthome:router01]: 201 ✓
+
+--- Verification ---
+  smarthome:bulb01 → OK ✓
+  smarthome:ac01 → OK ✓
+  smarthome:alexa01 → OK ✓
+  smarthome:router01 → OK ✓
+
+========================================
+ALL DEVICES READY
+========================================
+  smarthome:bulb01   - Smart Bulb
+  smarthome:ac01     - Smart AC
+  smarthome:alexa01  - Alexa Echo Dot
+  smarthome:router01 - Home Router
+>>> create_devices.py completed ✓
+
+[LOGS] Collecting Docker logs — 02_after_device_creation
+  Saved: docker_logs_20260316_213757\02_after_device_creation_docker-nginx-1.txt (543030 bytes)
+  Saved: docker_logs_20260316_213757\02_after_device_creation_docker-things-1.txt (1880082 bytes)
+  Saved: docker_logs_20260316_213757\02_after_device_creation_docker-gateway-1.txt (4294433 bytes)
+  Saved: docker_logs_20260316_213757\02_after_device_creation_docker-things-search-1.txt (243498 bytes)
+  Saved: docker_logs_20260316_213757\02_after_device_creation_docker-connectivity-1.txt (308959 bytes)
+  Saved: docker_logs_20260316_213757\02_after_device_creation_docker-swagger-ui-1.txt (15332 bytes)
+  Saved: docker_logs_20260316_213757\02_after_device_creation_docker-ditto-ui-1.txt (21953 bytes)
+  Saved: docker_logs_20260316_213757\02_after_device_creation_docker-mongodb-1.txt (751475 bytes)
+  Saved: docker_logs_20260316_213757\02_after_device_creation_docker-policies-1.txt (282530 bytes)
+  Saved: docker_logs_20260316_213757\02_after_device_creation_ALL.txt ✓
+
+[STEP 2] Running all attack simulations...
+
+>>> Running attack_bulb.py...
+----------------------------------------
+========================================
+BULB ATTACK SIMULATION
+MITRE ATT&CK Framework
+========================================
+
+[RESET] Resetting bulb to default state...
+  SET power.is_on = False → 204
+  SET brightness.level = 100 → 204
+  SET color.rgb = 255,255,255 → 204
+  SET temperature.celsius = 25.0 → 204
+
+[BASELINE] Saving normal state...
+  Saved: bulb01_baseline.json ✓
+
+ATTACK 1: T1565 - Data Manipulation
+  Action: Force ON at max brightness with red color
+  SET power.is_on = True → 204
+  SET brightness.level = 255 → 204
+  SET color.rgb = 255,0,0 → 204
+  Saved: T1565_data_manipulation.json ✓
+  SET power.is_on = False → 204
+  SET brightness.level = 100 → 204
+  SET color.rgb = 255,255,255 → 204
+  SET temperature.celsius = 25.0 → 204
+
+ATTACK 2: T1499 - Denial of Service
+  Action: Rapidly flipping power 20 times
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  SET power.is_on = True → 204
+  SET power.is_on = False → 204
+  Saved: T1499_denial_of_service.json ✓
+  SET power.is_on = False → 204
+  SET brightness.level = 100 → 204
+  SET color.rgb = 255,255,255 → 204
+  SET temperature.celsius = 25.0 → 204
+
+ATTACK 3: T1557 - Sensor Spoofing
+  Action: Inject false dangerous temperature
+  SET temperature.celsius = 999.9 → 204
+  Saved: T1557_sensor_spoofing.json ✓
+  SET power.is_on = False → 204
+  SET brightness.level = 100 → 204
+  SET color.rgb = 255,255,255 → 204
+  SET temperature.celsius = 25.0 → 204
+
+ATTACK 4: T1071 - Command and Control
+  Action: Blackout — turn off, set color black
+  SET color.rgb = 0,0,0 → 204
+  SET brightness.level = 0 → 204
+  SET power.is_on = False → 204
+  Saved: T1071_command_and_control.json ✓
+  SET power.is_on = False → 204
+  SET brightness.level = 100 → 204
+  SET color.rgb = 255,255,255 → 204
+  SET temperature.celsius = 25.0 → 204
+
+ATTACK 5: T1496 - Resource Hijacking
+  Action: Max brightness strobe simulation
+  SET brightness.level = 255 → 204
+  SET brightness.level = 0 → 204
+  SET brightness.level = 255 → 204
+  SET brightness.level = 0 → 204
+  SET brightness.level = 255 → 204
+  SET brightness.level = 0 → 204
+  SET brightness.level = 255 → 204
+  SET brightness.level = 0 → 204
+  SET brightness.level = 255 → 204
+  SET brightness.level = 0 → 204
+  Saved: T1496_resource_hijacking.json ✓
+  SET power.is_on = False → 204
+  SET brightness.level = 100 → 204
+  SET color.rgb = 255,255,255 → 204
+  SET temperature.celsius = 25.0 → 204
+
+========================================
+BULB SIMULATION COMPLETE
+========================================
+Baseline : all_attacks/bulb_baseline_20260316_213803
+Attacks  : all_attacks/bulb_attacks_20260316_213803
+
+Next: python compare_attacks.py all_attacks/bulb_baseline_20260316_213803 all_attacks/bulb_attacks_20260316_213803
+>>> attack_bulb.py completed ✓
+
+[LOGS] Collecting Docker logs — 03_after_bulb_attacks
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_docker-nginx-1.txt (553898 bytes)
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_docker-things-1.txt (1916397 bytes)
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_docker-gateway-1.txt (4383542 bytes)
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_docker-things-search-1.txt (243498 bytes)
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_docker-connectivity-1.txt (308959 bytes)
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_docker-swagger-ui-1.txt (15332 bytes)
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_docker-ditto-ui-1.txt (21953 bytes)
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_docker-mongodb-1.txt (751475 bytes)
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_docker-policies-1.txt (282905 bytes)
+  Saved: docker_logs_20260316_213757\03_after_bulb_attacks_ALL.txt ✓
+
+>>> Running attack_ac.py...
+----------------------------------------
+========================================
+AC ATTACK SIMULATION
+MITRE ATT&CK Framework
+========================================
+
+[RESET] Resetting AC to default state...
+  SET power.is_on = False → 204
+  SET temperature.target_celsius = 24.0 → 204
+  SET temperature.current_celsius = 30.0 → 204
+  SET mode.current_mode = cool → 204
+  SET fan.speed = medium → 204
+  SET timer.is_set = False → 204
+  SET status.error_code = None → 400
+  SET status.filter_clean_needed = False → 204
+
+[BASELINE] Saving normal state...
+  Saved: ac01_baseline.json ✓
+
+ATTACK 1: T1565 - Data Manipulation
+  Action: Set temperature to dangerous max (30°C target)
+  SET power.is_on = True → 204
+  SET temperature.target_celsius = 30.0 → 204
+  SET mode.current_mode = heat → 204
+  Saved: T1565_data_manipulation.json ✓
+  SET power.is_on = False → 204
+  SET temperature.target_celsius = 24.0 → 204
+  SET temperature.current_celsius = 30.0 → 204
+  SET mode.current_mode = cool → 204
+  SET fan.speed = medium → 204
+  SET timer.is_set = False → 204
+  SET status.error_code = None → 400
+  SET status.filter_clean_needed = False → 204
+
+ATTACK 2: T1499 - Denial of Service
+  Action: Rapidly cycling power and modes
+  SET power.is_on = True → 204
+  SET mode.current_mode = cool → 204
+  SET power.is_on = False → 204
+  SET mode.current_mode = heat → 204
+  SET power.is_on = True → 204
+  SET mode.current_mode = fan → 204
+  SET power.is_on = False → 204
+  SET mode.current_mode = dry → 204
+  SET power.is_on = True → 204
+  SET mode.current_mode = auto → 204
+  SET power.is_on = False → 204
+  SET mode.current_mode = cool → 204
+  SET power.is_on = True → 204
+  SET mode.current_mode = heat → 204
+  SET power.is_on = False → 204
+  SET mode.current_mode = fan → 204
+  SET power.is_on = True → 204
+  SET mode.current_mode = dry → 204
+  SET power.is_on = False → 204
+  SET mode.current_mode = auto → 204
+  SET power.is_on = True → 204
+  SET mode.current_mode = cool → 204
+  SET power.is_on = False → 204
+  SET mode.current_mode = heat → 204
+  SET power.is_on = True → 204
+  SET mode.current_mode = fan → 204
+  SET power.is_on = False → 204
+  SET mode.current_mode = dry → 204
+  SET power.is_on = True → 204
+  SET mode.current_mode = auto → 204
+  Saved: T1499_denial_of_service.json ✓
+  SET power.is_on = False → 204
+  SET temperature.target_celsius = 24.0 → 204
+  SET temperature.current_celsius = 30.0 → 204
+  SET mode.current_mode = cool → 204
+  SET fan.speed = medium → 204
+  SET timer.is_set = False → 204
+  SET status.error_code = None → 400
+  SET status.filter_clean_needed = False → 204
+
+ATTACK 3: T1557 - Sensor Spoofing
+  Action: Inject false current temperature reading
+  SET temperature.current_celsius = -10.0 → 204
+  SET status.error_code = E404 → 204
+  Saved: T1557_sensor_spoofing.json ✓
+  SET power.is_on = False → 204
+  SET temperature.target_celsius = 24.0 → 204
+  SET temperature.current_celsius = 30.0 → 204
+  SET mode.current_mode = cool → 204
+  SET fan.speed = medium → 204
+  SET timer.is_set = False → 204
+  SET status.error_code = None → 400
+  SET status.filter_clean_needed = False → 204
+
+ATTACK 4: T1071 - Command and Control
+  Action: Hijack AC — max heat, max fan, disable timer
+  SET power.is_on = True → 204
+  SET temperature.target_celsius = 30.0 → 204
+  SET mode.current_mode = heat → 204
+  SET fan.speed = high → 204
+  SET timer.is_set = False → 204
+  Saved: T1071_command_and_control.json ✓
+  SET power.is_on = False → 204
+  SET temperature.target_celsius = 24.0 → 204
+  SET temperature.current_celsius = 30.0 → 204
+  SET mode.current_mode = cool → 204
+  SET fan.speed = medium → 204
+  SET timer.is_set = False → 204
+  SET status.error_code = None → 400
+  SET status.filter_clean_needed = False → 204
+
+ATTACK 5: T1485 - Data Destruction
+  Action: Corrupt AC state — trigger false filter alert and error
+  SET status.filter_clean_needed = True → 204
+  SET status.error_code = CRITICAL_FAILURE → 204
+  SET temperature.min_celsius = 999.0 → 204
+  SET temperature.max_celsius = -999.0 → 204
+  Saved: T1485_data_destruction.json ✓
+  SET power.is_on = False → 204
+  SET temperature.target_celsius = 24.0 → 204
+  SET temperature.current_celsius = 30.0 → 204
+  SET mode.current_mode = cool → 204
+  SET fan.speed = medium → 204
+  SET timer.is_set = False → 204
+  SET status.error_code = None → 400
+  SET status.filter_clean_needed = False → 204
+
+========================================
+AC SIMULATION COMPLETE
+========================================
+Baseline : all_attacks/ac_baseline_20260316_213818
+Attacks  : all_attacks/ac_attacks_20260316_213818
+
+Next: python compare_attacks.py all_attacks/ac_baseline_20260316_213818 all_attacks/ac_attacks_20260316_213818
+>>> attack_ac.py completed ✓
+
+[LOGS] Collecting Docker logs — 04_after_ac_attacks
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_docker-nginx-1.txt (569981 bytes)
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_docker-things-1.txt (1965554 bytes)
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_docker-gateway-1.txt (4515052 bytes)
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_docker-things-search-1.txt (243498 bytes)
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_docker-connectivity-1.txt (308959 bytes)
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_docker-swagger-ui-1.txt (15332 bytes)
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_docker-ditto-ui-1.txt (21953 bytes)
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_docker-mongodb-1.txt (752006 bytes)
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_docker-policies-1.txt (282905 bytes)
+  Saved: docker_logs_20260316_213757\04_after_ac_attacks_ALL.txt ✓
+
+>>> Running attack_alexa.py...
+----------------------------------------
+========================================
+ALEXA ATTACK SIMULATION
+MITRE ATT&CK Framework
+========================================
+
+[RESET] Resetting Alexa to default state...
+  SET power.is_on = True → 204
+  SET audio.volume = 5 → 204
+  SET audio.is_muted = False → 204
+  SET audio.is_playing = False → 204
+  SET voice_assistant.is_listening = False → 204
+  SET voice_assistant.last_command = None → 400
+  SET smart_home_control.last_device_controlled = None → 400
+  SET status.do_not_disturb = False → 204
+  SET status.night_mode = False → 204
+  SET network.is_connected = True → 204
+
+[BASELINE] Saving normal state...
+  Saved: alexa01_baseline.json ✓
+
+ATTACK 1: T1565 - Data Manipulation
+  Action: Inject fake voice commands and responses
+  SET voice_assistant.last_command = unlock front door → 204
+  SET voice_assistant.last_response = Unlocking front door → 204
+  SET smart_home_control.last_device_controlled = front_door_lock → 204
+  Saved: T1565_data_manipulation.json ✓
+  SET power.is_on = True → 204
+  SET audio.volume = 5 → 204
+  SET audio.is_muted = False → 204
+  SET audio.is_playing = False → 204
+  SET voice_assistant.is_listening = False → 204
+  SET voice_assistant.last_command = None → 400
+  SET smart_home_control.last_device_controlled = None → 400
+  SET status.do_not_disturb = False → 204
+  SET status.night_mode = False → 204
+  SET network.is_connected = True → 204
+
+ATTACK 2: T1499 - Denial of Service
+  Action: Spam volume changes and mute toggling
+  SET audio.volume = 0 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 1 → 204
+  SET audio.is_muted = False → 204
+  SET audio.volume = 2 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 3 → 204
+  SET audio.is_muted = False → 204
+  SET audio.volume = 4 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 5 → 204
+  SET audio.is_muted = False → 204
+  SET audio.volume = 6 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 7 → 204
+  SET audio.is_muted = False → 204
+  SET audio.volume = 8 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 9 → 204
+  SET audio.is_muted = False → 204
+  SET audio.volume = 10 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 0 → 204
+  SET audio.is_muted = False → 204
+  SET audio.volume = 1 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 2 → 204
+  SET audio.is_muted = False → 204
+  SET audio.volume = 3 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 4 → 204
+  SET audio.is_muted = False → 204
+  SET audio.volume = 5 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 6 → 204
+  SET audio.is_muted = False → 204
+  SET audio.volume = 7 → 204
+  SET audio.is_muted = True → 204
+  SET audio.volume = 8 → 204
+  SET audio.is_muted = False → 204
+  Saved: T1499_denial_of_service.json ✓
+  SET power.is_on = True → 204
+  SET audio.volume = 5 → 204
+  SET audio.is_muted = False → 204
+  SET audio.is_playing = False → 204
+  SET voice_assistant.is_listening = False → 204
+  SET voice_assistant.last_command = None → 400
+  SET smart_home_control.last_device_controlled = None → 400
+  SET status.do_not_disturb = False → 204
+  SET status.night_mode = False → 204
+  SET network.is_connected = True → 204
+
+ATTACK 3: T1557 - Man in the Middle
+  Action: Spoof network details and disconnect
+  SET network.is_connected = False → 204
+  SET network.ip_address = 10.0.0.99 → 204
+  SET network.signal_strength_dbm = -999 → 204
+  Saved: T1557_man_in_the_middle.json ✓
+  SET power.is_on = True → 204
+  SET audio.volume = 5 → 204
+  SET audio.is_muted = False → 204
+  SET audio.is_playing = False → 204
+  SET voice_assistant.is_listening = False → 204
+  SET voice_assistant.last_command = None → 400
+  SET smart_home_control.last_device_controlled = None → 400
+  SET status.do_not_disturb = False → 204
+  SET status.night_mode = False → 204
+  SET network.is_connected = True → 204
+
+ATTACK 4: T1071 - Command and Control
+  Action: Hijack connected devices list and routines
+  SET smart_home_control.connected_devices = ['attacker_device'] → 204
+  SET smart_home_control.active_routines = ['malicious_routine'] → 204
+  SET voice_assistant.wake_word = Hey Attacker → 204
+  Saved: T1071_command_and_control.json ✓
+  SET power.is_on = True → 204
+  SET audio.volume = 5 → 204
+  SET audio.is_muted = False → 204
+  SET audio.is_playing = False → 204
+  SET voice_assistant.is_listening = False → 204
+  SET voice_assistant.last_command = None → 400
+  SET smart_home_control.last_device_controlled = None → 400
+  SET status.do_not_disturb = False → 204
+  SET status.night_mode = False → 204
+  SET network.is_connected = True → 204
+
+ATTACK 5: T1489 - Service Stop
+  Action: Shut down Alexa, enable DND, disable listening
+  SET power.is_on = False → 204
+  SET status.do_not_disturb = True → 204
+  SET status.is_online = False → 204
+  SET voice_assistant.is_listening = False → 204
+  SET network.is_connected = False → 204
+  Saved: T1489_service_stop.json ✓
+  SET power.is_on = True → 204
+  SET audio.volume = 5 → 204
+  SET audio.is_muted = False → 204
+  SET audio.is_playing = False → 204
+  SET voice_assistant.is_listening = False → 204
+  SET voice_assistant.last_command = None → 400
+  SET smart_home_control.last_device_controlled = None → 400
+  SET status.do_not_disturb = False → 204
+  SET status.night_mode = False → 204
+  SET network.is_connected = True → 204
+
+========================================
+ALEXA SIMULATION COMPLETE
+========================================
+Baseline : all_attacks/alexa_baseline_20260316_213835
+Attacks  : all_attacks/alexa_attacks_20260316_213835
+
+Next: python compare_attacks.py all_attacks/alexa_baseline_20260316_213835 all_attacks/alexa_attacks_20260316_213835
+>>> attack_alexa.py completed ✓
+
+[LOGS] Collecting Docker logs — 05_after_alexa_attacks
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_docker-nginx-1.txt (590265 bytes)
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_docker-things-1.txt (2025319 bytes)
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_docker-gateway-1.txt (4673436 bytes)
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_docker-things-search-1.txt (243498 bytes)
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_docker-connectivity-1.txt (308959 bytes)
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_docker-swagger-ui-1.txt (15332 bytes)
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_docker-ditto-ui-1.txt (21953 bytes)
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_docker-mongodb-1.txt (752006 bytes)
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_docker-policies-1.txt (282905 bytes)
+  Saved: docker_logs_20260316_213757\05_after_alexa_attacks_ALL.txt ✓
+
+>>> Running attack_router.py...
+----------------------------------------
+========================================
+ROUTER ATTACK SIMULATION
+MITRE ATT&CK Framework
+========================================
+
+[RESET] Resetting Router to default state...
+  SET network.ssid = HomeNetwork → 204
+  SET network.dns_primary = 8.8.8.8 → 204
+  SET network.dns_secondary = 8.8.4.4 → 204
+  SET network.wan_ip = 203.0.113.1 → 204
+  SET wifi.is_enabled = True → 204
+  SET wifi.encryption = WPA2 → 204
+  SET wifi.channel = 6 → 204
+  SET firewall.is_enabled = True → 204
+  SET firewall.blocked_ips = [] → 204
+  SET firewall.intrusion_detection = True → 204
+  SET connected_devices.count = 3 → 204
+  SET connected_devices.devices = ['bulb01', 'alexa01', 'ac01'] → 204
+  SET traffic.current_usage_percent = 10 → 204
+  SET status.is_online = True → 204
+
+[BASELINE] Saving normal state...
+  Saved: router01_baseline.json ✓
+
+ATTACK 1: T1565 - Data Manipulation
+  Action: Change DNS to malicious servers
+  SET network.dns_primary = 1.3.3.7 → 204
+  SET network.dns_secondary = 6.6.6.6 → 204
+  SET network.ssid = FreePublicWiFi → 204
+  Saved: T1565_data_manipulation.json ✓
+  SET network.ssid = HomeNetwork → 204
+  SET network.dns_primary = 8.8.8.8 → 204
+  SET network.dns_secondary = 8.8.4.4 → 204
+  SET network.wan_ip = 203.0.113.1 → 204
+  SET wifi.is_enabled = True → 204
+  SET wifi.encryption = WPA2 → 204
+  SET wifi.channel = 6 → 204
+  SET firewall.is_enabled = True → 204
+  SET firewall.blocked_ips = [] → 204
+  SET firewall.intrusion_detection = True → 204
+  SET connected_devices.count = 3 → 204
+  SET connected_devices.devices = ['bulb01', 'alexa01', 'ac01'] → 204
+  SET traffic.current_usage_percent = 10 → 204
+  SET status.is_online = True → 204
+
+ATTACK 2: T1499 - Denial of Service
+  Action: Flood bandwidth usage to 100%
+  SET traffic.current_usage_percent = 100 → 204
+  SET traffic.bytes_sent = 999999999 → 204
+  SET traffic.bytes_received = 999999999 → 204
+  SET wifi.channel = 1 → 204
+  SET wifi.channel = 2 → 204
+  SET wifi.channel = 3 → 204
+  SET wifi.channel = 4 → 204
+  SET wifi.channel = 5 → 204
+  SET wifi.channel = 6 → 204
+  SET wifi.channel = 7 → 204
+  SET wifi.channel = 8 → 204
+  SET wifi.channel = 9 → 204
+  SET wifi.channel = 10 → 204
+  SET wifi.channel = 11 → 204
+  SET wifi.channel = 12 → 204
+  SET wifi.channel = 13 → 204
+  SET wifi.channel = 1 → 204
+  SET wifi.channel = 2 → 204
+  Saved: T1499_denial_of_service.json ✓
+  SET network.ssid = HomeNetwork → 204
+  SET network.dns_primary = 8.8.8.8 → 204
+  SET network.dns_secondary = 8.8.4.4 → 204
+  SET network.wan_ip = 203.0.113.1 → 204
+  SET wifi.is_enabled = True → 204
+  SET wifi.encryption = WPA2 → 204
+  SET wifi.channel = 6 → 204
+  SET firewall.is_enabled = True → 204
+  SET firewall.blocked_ips = [] → 204
+  SET firewall.intrusion_detection = True → 204
+  SET connected_devices.count = 3 → 204
+  SET connected_devices.devices = ['bulb01', 'alexa01', 'ac01'] → 204
+  SET traffic.current_usage_percent = 10 → 204
+  SET status.is_online = True → 204
+
+ATTACK 3: T1557 - Man in the Middle
+  Action: Disable firewall, disable intrusion detection
+  SET firewall.is_enabled = False → 204
+  SET firewall.intrusion_detection = False → 204
+  SET wifi.encryption = NONE → 204
+  SET network.wan_ip = 10.0.0.1 → 204
+  Saved: T1557_man_in_the_middle.json ✓
+  SET network.ssid = HomeNetwork → 204
+  SET network.dns_primary = 8.8.8.8 → 204
+  SET network.dns_secondary = 8.8.4.4 → 204
+  SET network.wan_ip = 203.0.113.1 → 204
+  SET wifi.is_enabled = True → 204
+  SET wifi.encryption = WPA2 → 204
+  SET wifi.channel = 6 → 204
+  SET firewall.is_enabled = True → 204
+  SET firewall.blocked_ips = [] → 204
+  SET firewall.intrusion_detection = True → 204
+  SET connected_devices.count = 3 → 204
+  SET connected_devices.devices = ['bulb01', 'alexa01', 'ac01'] → 204
+  SET traffic.current_usage_percent = 10 → 204
+  SET status.is_online = True → 204
+
+ATTACK 4: T1071 - Command and Control
+  Action: Hijack connected devices, block legitimate IPs
+  SET connected_devices.devices = ['attacker_device'] → 204
+  SET connected_devices.count = 1 → 204
+  SET firewall.blocked_ips = ['192.168.1.101', '192.168.1.102'] → 204
+  Saved: T1071_command_and_control.json ✓
+  SET network.ssid = HomeNetwork → 204
+  SET network.dns_primary = 8.8.8.8 → 204
+  SET network.dns_secondary = 8.8.4.4 → 204
+  SET network.wan_ip = 203.0.113.1 → 204
+  SET wifi.is_enabled = True → 204
+  SET wifi.encryption = WPA2 → 204
+  SET wifi.channel = 6 → 204
+  SET firewall.is_enabled = True → 204
+  SET firewall.blocked_ips = [] → 204
+  SET firewall.intrusion_detection = True → 204
+  SET connected_devices.count = 3 → 204
+  SET connected_devices.devices = ['bulb01', 'alexa01', 'ac01'] → 204
+  SET traffic.current_usage_percent = 10 → 204
+  SET status.is_online = True → 204
+
+ATTACK 5: T1489 - Service Stop
+  Action: Disable WiFi and take router offline
+  SET wifi.is_enabled = False → 204
+  SET status.is_online = False → 204
+  SET connected_devices.count = 0 → 204
+  SET connected_devices.devices = [] → 204
+  Saved: T1489_service_stop.json ✓
+  SET network.ssid = HomeNetwork → 204
+  SET network.dns_primary = 8.8.8.8 → 204
+  SET network.dns_secondary = 8.8.4.4 → 204
+  SET network.wan_ip = 203.0.113.1 → 204
+  SET wifi.is_enabled = True → 204
+  SET wifi.encryption = WPA2 → 204
+  SET wifi.channel = 6 → 204
+  SET firewall.is_enabled = True → 204
+  SET firewall.blocked_ips = [] → 204
+  SET firewall.intrusion_detection = True → 204
+  SET connected_devices.count = 3 → 204
+  SET connected_devices.devices = ['bulb01', 'alexa01', 'ac01'] → 204
+  SET traffic.current_usage_percent = 10 → 204
+  SET status.is_online = True → 204
+
+========================================
+ROUTER SIMULATION COMPLETE
+========================================
+Baseline : all_attacks/router_baseline_20260316_213852
+Attacks  : all_attacks/router_attacks_20260316_213852
+
+Next: python compare_attacks.py all_attacks/router_baseline_20260316_213852 all_attacks/router_attacks_20260316_213852
+>>> attack_router.py completed ✓
+
+[LOGS] Collecting Docker logs — 06_after_router_attacks
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_docker-nginx-1.txt (610960 bytes)
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_docker-things-1.txt (2091360 bytes)
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_docker-gateway-1.txt (4837628 bytes)
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_docker-things-search-1.txt (243498 bytes)
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_docker-connectivity-1.txt (308959 bytes)
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_docker-swagger-ui-1.txt (15332 bytes)
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_docker-ditto-ui-1.txt (21953 bytes)
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_docker-mongodb-1.txt (752006 bytes)
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_docker-policies-1.txt (282905 bytes)
+  Saved: docker_logs_20260316_213757\06_after_router_attacks_ALL.txt ✓
+
+[STEP 3] Comparing baseline vs attack logs...
+
+>>> Comparing all_attacks\bulb_baseline_20260316_213803 vs all_attacks\bulb_attacks_20260316_213803
+----------------------------------------
+
+=============================================
+ATTACK COMPARISON REPORT
+=============================================
+
+Attack : T1071_command_and_control.json
+  CHANGED  brightness.level:
+           100 → 0
+  CHANGED  color.rgb:
+           255,255,255 → 0,0,0
+
+Attack : T1496_resource_hijacking.json
+  CHANGED  brightness.level:
+           100 → 0
+
+Attack : T1499_denial_of_service.json
+  No changes detected
+
+Attack : T1557_sensor_spoofing.json
+  CHANGED  temperature.celsius:
+           25.0 → 999.9
+
+Attack : T1565_data_manipulation.json
+  CHANGED  power.is_on:
+           False → True
+  CHANGED  brightness.level:
+           100 → 255
+  CHANGED  color.rgb:
+           255,255,255 → 255,0,0
+
+=============================================
+END OF REPORT
+=============================================
+
+>>> Comparing all_attacks\ac_baseline_20260316_213818 vs all_attacks\ac_attacks_20260316_213818
+----------------------------------------
+
+=============================================
+ATTACK COMPARISON REPORT
+=============================================
+
+Attack : T1071_command_and_control.json
+  CHANGED  power.is_on:
+           False → True
+  CHANGED  temperature.target_celsius:
+           24.0 → 30.0
+  CHANGED  mode.current_mode:
+           cool → heat
+  CHANGED  fan.speed:
+           medium → high
+  CHANGED  status.error_code:
+           None → E404
+
+Attack : T1485_data_destruction.json
+  CHANGED  temperature.min_celsius:
+           16.0 → 999.0
+  CHANGED  temperature.max_celsius:
+           30.0 → -999.0
+  CHANGED  status.error_code:
+           None → CRITICAL_FAILURE
+  CHANGED  status.filter_clean_needed:
+           False → True
+
+Attack : T1499_denial_of_service.json
+  CHANGED  power.is_on:
+           False → True
+  CHANGED  mode.current_mode:
+           cool → auto
+
+Attack : T1557_sensor_spoofing.json
+  CHANGED  temperature.current_celsius:
+           30.0 → -10.0
+  CHANGED  status.error_code:
+           None → E404
+
+Attack : T1565_data_manipulation.json
+  CHANGED  power.is_on:
+           False → True
+  CHANGED  temperature.target_celsius:
+           24.0 → 30.0
+  CHANGED  mode.current_mode:
+           cool → heat
+
+=============================================
+END OF REPORT
+=============================================
+
+>>> Comparing all_attacks\alexa_baseline_20260316_213835 vs all_attacks\alexa_attacks_20260316_213835
+----------------------------------------
+
+=============================================
+ATTACK COMPARISON REPORT
+=============================================
+
+Attack : T1071_command_and_control.json
+  CHANGED  voice_assistant.wake_word:
+           Alexa → Hey Attacker
+  CHANGED  voice_assistant.last_command:
+           None → unlock front door
+  CHANGED  voice_assistant.last_response:
+           None → Unlocking front door
+  CHANGED  smart_home_control.connected_devices:
+           ['bulb01', 'ac01', 'router01'] → ['attacker_device']
+  CHANGED  smart_home_control.active_routines:
+           ['morning', 'night'] → ['malicious_routine']
+  CHANGED  smart_home_control.last_device_controlled:
+           None → front_door_lock
+  CHANGED  network.ip_address:
+           192.168.1.101 → 10.0.0.99
+  CHANGED  network.signal_strength_dbm:
+           -60 → -999
+
+Attack : T1489_service_stop.json
+  CHANGED  power.is_on:
+           True → False
+  CHANGED  voice_assistant.wake_word:
+           Alexa → Hey Attacker
+  CHANGED  voice_assistant.last_command:
+           None → unlock front door
+  CHANGED  voice_assistant.last_response:
+           None → Unlocking front door
+  CHANGED  smart_home_control.connected_devices:
+           ['bulb01', 'ac01', 'router01'] → ['attacker_device']
+  CHANGED  smart_home_control.active_routines:
+           ['morning', 'night'] → ['malicious_routine']
+  CHANGED  smart_home_control.last_device_controlled:
+           None → front_door_lock
+  CHANGED  network.is_connected:
+           True → False
+  CHANGED  network.ip_address:
+           192.168.1.101 → 10.0.0.99
+  CHANGED  network.signal_strength_dbm:
+           -60 → -999
+  CHANGED  status.is_online:
+           True → False
+  CHANGED  status.do_not_disturb:
+           False → True
+
+Attack : T1499_denial_of_service.json
+  CHANGED  audio.volume:
+           5 → 8
+  CHANGED  voice_assistant.last_command:
+           None → unlock front door
+  CHANGED  voice_assistant.last_response:
+           None → Unlocking front door
+  CHANGED  smart_home_control.last_device_controlled:
+           None → front_door_lock
+
+Attack : T1557_man_in_the_middle.json
+  CHANGED  voice_assistant.last_command:
+           None → unlock front door
+  CHANGED  voice_assistant.last_response:
+           None → Unlocking front door
+  CHANGED  smart_home_control.last_device_controlled:
+           None → front_door_lock
+  CHANGED  network.is_connected:
+           True → False
+  CHANGED  network.ip_address:
+           192.168.1.101 → 10.0.0.99
+  CHANGED  network.signal_strength_dbm:
+           -60 → -999
+
+Attack : T1565_data_manipulation.json
+  CHANGED  voice_assistant.last_command:
+           None → unlock front door
+  CHANGED  voice_assistant.last_response:
+           None → Unlocking front door
+  CHANGED  smart_home_control.last_device_controlled:
+           None → front_door_lock
+
+=============================================
+END OF REPORT
+=============================================
+
+>>> Comparing all_attacks\router_baseline_20260316_213852 vs all_attacks\router_attacks_20260316_213852
+----------------------------------------
+
+=============================================
+ATTACK COMPARISON REPORT
+=============================================
+
+Attack : T1071_command_and_control.json
+  CHANGED  connected_devices.count:
+           3 → 1
+  CHANGED  connected_devices.devices:
+           ['bulb01', 'alexa01', 'ac01'] → ['attacker_device']
+  CHANGED  firewall.blocked_ips:
+           [] → ['192.168.1.101', '192.168.1.102']
+  CHANGED  traffic.bytes_sent:
+           0 → 999999999
+  CHANGED  traffic.bytes_received:
+           0 → 999999999
+
+Attack : T1489_service_stop.json
+  CHANGED  wifi.is_enabled:
+           True → False
+  CHANGED  connected_devices.count:
+           3 → 0
+  CHANGED  connected_devices.devices:
+           ['bulb01', 'alexa01', 'ac01'] → []
+  CHANGED  traffic.bytes_sent:
+           0 → 999999999
+  CHANGED  traffic.bytes_received:
+           0 → 999999999
+  CHANGED  status.is_online:
+           True → False
+
+Attack : T1499_denial_of_service.json
+  CHANGED  wifi.channel:
+           6 → 2
+  CHANGED  traffic.bytes_sent:
+           0 → 999999999
+  CHANGED  traffic.bytes_received:
+           0 → 999999999
+  CHANGED  traffic.current_usage_percent:
+           10 → 100
+
+Attack : T1557_man_in_the_middle.json
+  CHANGED  network.wan_ip:
+           203.0.113.1 → 10.0.0.1
+  CHANGED  wifi.encryption:
+           WPA2 → NONE
+  CHANGED  firewall.is_enabled:
+           True → False
+  CHANGED  firewall.intrusion_detection:
+           True → False
+  CHANGED  traffic.bytes_sent:
+           0 → 999999999
+  CHANGED  traffic.bytes_received:
+           0 → 999999999
+
+Attack : T1565_data_manipulation.json
+  CHANGED  network.ssid:
+           HomeNetwork → FreePublicWiFi
+  CHANGED  network.dns_primary:
+           8.8.8.8 → 1.3.3.7
+  CHANGED  network.dns_secondary:
+           8.8.4.4 → 6.6.6.6
+
+=============================================
+END OF REPORT
+=============================================
+
+[LOGS] Collecting Docker logs — 07_final
+  Saved: docker_logs_20260316_213757\07_final_docker-nginx-1.txt (610960 bytes)
+  Saved: docker_logs_20260316_213757\07_final_docker-things-1.txt (2091360 bytes)
+  Saved: docker_logs_20260316_213757\07_final_docker-gateway-1.txt (4837628 bytes)
+  Saved: docker_logs_20260316_213757\07_final_docker-things-search-1.txt (243498 bytes)
+  Saved: docker_logs_20260316_213757\07_final_docker-connectivity-1.txt (308959 bytes)
+  Saved: docker_logs_20260316_213757\07_final_docker-swagger-ui-1.txt (15332 bytes)
+  Saved: docker_logs_20260316_213757\07_final_docker-ditto-ui-1.txt (21953 bytes)
+  Saved: docker_logs_20260316_213757\07_final_docker-mongodb-1.txt (752006 bytes)
+  Saved: docker_logs_20260316_213757\07_final_docker-policies-1.txt (282905 bytes)
+  Saved: docker_logs_20260316_213757\07_final_ALL.txt ✓
+
+==================================================
+  ALL DONE
+==================================================
+
+Docker logs saved in: docker_logs_20260316_213757/
+Files collected:
+  01_before_setup_ALL.txt (8916338 bytes)
+  01_before_setup_docker-connectivity-1.txt (308959 bytes)
+  01_before_setup_docker-ditto-ui-1.txt (21953 bytes)
+  01_before_setup_docker-gateway-1.txt (4280492 bytes)
+  01_before_setup_docker-mongodb-1.txt (751475 bytes)
+  01_before_setup_docker-nginx-1.txt (541427 bytes)
+  01_before_setup_docker-policies-1.txt (275429 bytes)
+  01_before_setup_docker-swagger-ui-1.txt (15332 bytes)
+  01_before_setup_docker-things-1.txt (1875958 bytes)
+  01_before_setup_docker-things-search-1.txt (243498 bytes)
+  02_after_device_creation_ALL.txt (8949154 bytes)
+  02_after_device_creation_docker-connectivity-1.txt (308959 bytes)
+  02_after_device_creation_docker-ditto-ui-1.txt (21953 bytes)
+  02_after_device_creation_docker-gateway-1.txt (4294433 bytes)
+  02_after_device_creation_docker-mongodb-1.txt (751475 bytes)
+  02_after_device_creation_docker-nginx-1.txt (543030 bytes)
+  02_after_device_creation_docker-policies-1.txt (282530 bytes)
+  02_after_device_creation_docker-swagger-ui-1.txt (15332 bytes)
+  02_after_device_creation_docker-things-1.txt (1880082 bytes)
+  02_after_device_creation_docker-things-search-1.txt (243498 bytes)
+  03_after_bulb_attacks_ALL.txt (9095654 bytes)
+  03_after_bulb_attacks_docker-connectivity-1.txt (308959 bytes)
+  03_after_bulb_attacks_docker-ditto-ui-1.txt (21953 bytes)
+  03_after_bulb_attacks_docker-gateway-1.txt (4383542 bytes)
+  03_after_bulb_attacks_docker-mongodb-1.txt (751475 bytes)
+  03_after_bulb_attacks_docker-nginx-1.txt (553898 bytes)
+  03_after_bulb_attacks_docker-policies-1.txt (282905 bytes)
+  03_after_bulb_attacks_docker-swagger-ui-1.txt (15332 bytes)
+  03_after_bulb_attacks_docker-things-1.txt (1916397 bytes)
+  03_after_bulb_attacks_docker-things-search-1.txt (243498 bytes)
+  04_after_ac_attacks_ALL.txt (9303194 bytes)
+  04_after_ac_attacks_docker-connectivity-1.txt (308959 bytes)
+  04_after_ac_attacks_docker-ditto-ui-1.txt (21953 bytes)
+  04_after_ac_attacks_docker-gateway-1.txt (4515052 bytes)
+  04_after_ac_attacks_docker-mongodb-1.txt (752006 bytes)
+  04_after_ac_attacks_docker-nginx-1.txt (569981 bytes)
+  04_after_ac_attacks_docker-policies-1.txt (282905 bytes)
+  04_after_ac_attacks_docker-swagger-ui-1.txt (15332 bytes)
+  04_after_ac_attacks_docker-things-1.txt (1965554 bytes)
+  04_after_ac_attacks_docker-things-search-1.txt (243498 bytes)
+  05_after_alexa_attacks_ALL.txt (9563127 bytes)
+  05_after_alexa_attacks_docker-connectivity-1.txt (308959 bytes)
+  05_after_alexa_attacks_docker-ditto-ui-1.txt (21953 bytes)
+  05_after_alexa_attacks_docker-gateway-1.txt (4673436 bytes)
+  05_after_alexa_attacks_docker-mongodb-1.txt (752006 bytes)
+  05_after_alexa_attacks_docker-nginx-1.txt (590265 bytes)
+  05_after_alexa_attacks_docker-policies-1.txt (282905 bytes)
+  05_after_alexa_attacks_docker-swagger-ui-1.txt (15332 bytes)
+  05_after_alexa_attacks_docker-things-1.txt (2025319 bytes)
+  05_after_alexa_attacks_docker-things-search-1.txt (243498 bytes)
+  06_after_router_attacks_ALL.txt (9833786 bytes)
+  06_after_router_attacks_docker-connectivity-1.txt (308959 bytes)
+  06_after_router_attacks_docker-ditto-ui-1.txt (21953 bytes)
+  06_after_router_attacks_docker-gateway-1.txt (4837628 bytes)
+  06_after_router_attacks_docker-mongodb-1.txt (752006 bytes)
+  06_after_router_attacks_docker-nginx-1.txt (610960 bytes)
+  06_after_router_attacks_docker-policies-1.txt (282905 bytes)
+  06_after_router_attacks_docker-swagger-ui-1.txt (15332 bytes)
+  06_after_router_attacks_docker-things-1.txt (2091360 bytes)
+  06_after_router_attacks_docker-things-search-1.txt (243498 bytes)
+  07_final_ALL.txt (9833499 bytes)
+  07_final_docker-connectivity-1.txt (308959 bytes)
+  07_final_docker-ditto-ui-1.txt (21953 bytes)
+  07_final_docker-gateway-1.txt (4837628 bytes)
+  07_final_docker-mongodb-1.txt (752006 bytes)
+  07_final_docker-nginx-1.txt (610960 bytes)
+  07_final_docker-policies-1.txt (282905 bytes)
+  07_final_docker-swagger-ui-1.txt (15332 bytes)
+  07_final_docker-things-1.txt (2091360 bytes)
+  07_final_docker-things-search-1.txt (243498 bytes)

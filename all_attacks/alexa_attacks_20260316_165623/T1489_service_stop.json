@@ -1,0 +1,62 @@
+{
+  "thingId": "smarthome:alexa01",
+  "policyId": "smarthome:policy-alexa",
+  "attributes": {
+    "name": "Alexa Echo Dot",
+    "type": "smart-speaker",
+    "location": "living_room",
+    "manufacturer": "Amazon",
+    "model": "Echo Dot Gen 4"
+  },
+  "features": {
+    "power": {
+      "properties": {
+        "is_on": false,
+        "power_consumption_watts": 15
+      }
+    },
+    "audio": {
+      "properties": {
+        "volume": 5,
+        "is_muted": false,
+        "is_playing": false,
+        "current_track": null
+      }
+    },
+    "voice_assistant": {
+      "properties": {
+        "is_listening": false,
+        "wake_word": "Hey Attacker",
+        "last_command": "unlock front door",
+        "last_response": "Unlocking front door"
+      }
+    },
+    "smart_home_control": {
+      "properties": {
+        "connected_devices": [
+          "attacker_device"
+        ],
+        "active_routines": [
+          "malicious_routine"
+        ],
+        "last_device_controlled": "front_door_lock"
+      }
+    },
+    "network": {
+      "properties": {
+        "is_connected": false,
+        "ip_address": "10.0.0.99",
+        "mac_address": "AA:BB:CC:DD:EE:FF",
+        "signal_strength_dbm": -999
+      }
+    },
+    "status": {
+      "properties": {
+        "firmware_version": "1.0.0",
+        "is_online": false,
+        "do_not_disturb": true,
+        "night_mode": false
+      }
+    }
+  }
+}

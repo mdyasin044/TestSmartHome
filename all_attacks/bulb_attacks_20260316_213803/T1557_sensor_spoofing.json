@@ -1,0 +1,31 @@
+{
+  "thingId": "smarthome:bulb01",
+  "policyId": "smarthome:policy-bulb",
+  "attributes": {
+    "name": "Living Room Bulb",
+    "type": "smart-bulb",
+    "location": "living_room"
+  },
+  "features": {
+    "power": {
+      "properties": {
+        "is_on": false
+      }
+    },
+    "brightness": {
+      "properties": {
+        "level": 100
+      }
+    },
+    "color": {
+      "properties": {
+        "rgb": "255,255,255"
+      }
+    },
+    "temperature": {
+      "properties": {
+        "celsius": 999.9
+      }
+    }
+  }
+}

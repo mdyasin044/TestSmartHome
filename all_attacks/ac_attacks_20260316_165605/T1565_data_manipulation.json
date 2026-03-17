@@ -1,0 +1,62 @@
+{
+  "thingId": "smarthome:ac01",
+  "policyId": "smarthome:policy-ac",
+  "attributes": {
+    "name": "Living Room AC",
+    "type": "smart-ac",
+    "location": "living_room",
+    "manufacturer": "Generic",
+    "model": "SmartCool-01"
+  },
+  "features": {
+    "power": {
+      "properties": {
+        "is_on": true
+      }
+    },
+    "temperature": {
+      "properties": {
+        "target_celsius": 30.0,
+        "current_celsius": 30.0,
+        "min_celsius": 999.0,
+        "max_celsius": -999.0
+      }
+    },
+    "mode": {
+      "properties": {
+        "current_mode": "heat",
+        "available_modes": [
+          "cool",
+          "heat",
+          "fan",
+          "dry",
+          "auto"
+        ]
+      }
+    },
+    "fan": {
+      "properties": {
+        "speed": "medium",
+        "available_speeds": [
+          "low",
+          "medium",
+          "high",
+          "auto"
+        ]
+      }
+    },
+    "timer": {
+      "properties": {
+        "is_set": false,
+        "turn_off_after_minutes": 0
+      }
+    },
+    "status": {
+      "properties": {
+        "is_online": true,
+        "error_code": "CRITICAL_FAILURE",
+        "filter_clean_needed": false
+      }
+    }
+  }
+}
